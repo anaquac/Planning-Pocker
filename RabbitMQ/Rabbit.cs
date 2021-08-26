@@ -1,7 +1,4 @@
-﻿
-using System;
-using System.Text;
-using System.Threading;
+﻿using System.Text;
 using Newtonsoft.Json;
 using Planning_Poker.Dto;
 using RabbitMQ.Client;
@@ -17,10 +14,9 @@ namespace Planning_Poker.RabbitMQ
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
-            var count = 0;
 
                 var message = new { Name = "AllVotes", Message = $"Hello! Vote Publish: {votesDto.Id}" };
-                var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+            byte[] body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
                 channel.BasicPublish("", "demo-queue", null, body);
         }
